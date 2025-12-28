@@ -72,3 +72,5 @@ source/Makefile
 vscode/settings/backup_settings.json
 
 .DS_Store
+
+models/*.gguf
