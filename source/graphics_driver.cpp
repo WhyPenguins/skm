@@ -414,10 +414,11 @@ namespace splashkit_lib
         {
             if ( ! _sk_open_bitmaps[i]->surface )
             {
-                int w, h;
-                SDL_QueryTexture(_sk_open_bitmaps[i]->texture[0], nullptr, nullptr, &w, &h);
+                int wv, hv;
+                SDL_QueryTexture(_sk_open_bitmaps[i]->texture[0], nullptr, nullptr, &wv, &hv);
+                const int w = wv, h = hv;
 
-                int sz = 4 * w * h;
+                const int sz = 4 * w * h;
                 int pixels[w * h];
 
                 //            std::cout << "sz = " << sz << " size of pixels = " << sizeof(pixels) << std::endl;

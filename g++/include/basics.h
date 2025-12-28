@@ -220,6 +220,22 @@ vector<string> split(const string &text, char delimiter);
 */
 double square_root(int number);
 /**
+* Convert the passed in string into a double. This can fail in an error if
+* the value is not a number, consider using `is_number` to check before
+* converting a string.
+* @param text The text to convert.
+* @return The double value read from the text.
+*/
+double to_double(const string &text);
+/**
+* Convert the passed in string into an integer. This can fail in an error if
+* the value is not an integer, consider using `is_integer` to check before
+* converting a string.
+* @param text The text to convert.
+* @return The integer value read from the text.
+*/
+int to_integer(const string &text);
+/**
 * Return a lowercase version of the passed in string.
 * @param text The text to convert.
 * @return A lower case version of the passed in text.
