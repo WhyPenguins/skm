@@ -442,6 +442,22 @@ string to_lowercase(const string &text) {
     __skadapter__free__sklib_string(__skparam__text);
     return __skadapter__to_string(__skreturn);
 }
+string to_string(double value, int precision) {
+    double __skparam__value = __skadapter__to_double(value);
+    int __skparam__precision = __skadapter__to_int(precision);
+    __sklib_string __skreturn = __sklib__to_string__double__int(__skparam__value, __skparam__precision);
+    return __skadapter__to_string(__skreturn);
+}
+string to_string(double value) {
+    double __skparam__value = __skadapter__to_double(value);
+    __sklib_string __skreturn = __sklib__to_string__double(__skparam__value);
+    return __skadapter__to_string(__skreturn);
+}
+string to_string(int value) {
+    int __skparam__value = __skadapter__to_int(value);
+    __sklib_string __skreturn = __sklib__to_string__int(__skparam__value);
+    return __skadapter__to_string(__skreturn);
+}
 string to_uppercase(const string &text) {
     const __sklib_string __skparam__text = __skadapter__to_sklib_string(text);
     __sklib_string __skreturn = __sklib__to_uppercase__string_ref(__skparam__text);

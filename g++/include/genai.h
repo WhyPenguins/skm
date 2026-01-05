@@ -12,7 +12,6 @@
 #include <cstdint>
 using std::string;
 using std::vector;
-using std::to_string;
 
 struct _conversation_data;
 typedef struct _conversation_data *conversation;

@@ -1806,6 +1806,12 @@ sklib.__sklib__to_integer__string_ref.argtypes = [ _sklib_string ]
 sklib.__sklib__to_integer__string_ref.restype = c_int
 sklib.__sklib__to_lowercase__string_ref.argtypes = [ _sklib_string ]
 sklib.__sklib__to_lowercase__string_ref.restype = _sklib_string
+sklib.__sklib__to_string__double__int.argtypes = [ c_double, c_int ]
+sklib.__sklib__to_string__double__int.restype = _sklib_string
+sklib.__sklib__to_string__double.argtypes = [ c_double ]
+sklib.__sklib__to_string__double.restype = _sklib_string
+sklib.__sklib__to_string__int.argtypes = [ c_int ]
+sklib.__sklib__to_string__int.restype = _sklib_string
 sklib.__sklib__to_uppercase__string_ref.argtypes = [ _sklib_string ]
 sklib.__sklib__to_uppercase__string_ref.restype = _sklib_string
 sklib.__sklib__trim__string_ref.argtypes = [ _sklib_string ]
@@ -4816,6 +4822,19 @@ def to_integer ( text ):
 def to_lowercase ( text ):
     __skparam__text = __skadapter__to_sklib_string(text)
     __skreturn = sklib.__sklib__to_lowercase__string_ref(__skparam__text)
+    return __skadapter__to_string(__skreturn)
+def to_string_from_double_with_precision ( value, precision ):
+    __skparam__value = __skadapter__to_sklib_double(value)
+    __skparam__precision = __skadapter__to_sklib_int(precision)
+    __skreturn = sklib.__sklib__to_string__double__int(__skparam__value, __skparam__precision)
+    return __skadapter__to_string(__skreturn)
+def to_string_from_double ( value ):
+    __skparam__value = __skadapter__to_sklib_double(value)
+    __skreturn = sklib.__sklib__to_string__double(__skparam__value)
+    return __skadapter__to_string(__skreturn)
+def to_string_from_int ( value ):
+    __skparam__value = __skadapter__to_sklib_int(value)
+    __skreturn = sklib.__sklib__to_string__int(__skparam__value)
     return __skadapter__to_string(__skreturn)
 def to_uppercase ( text ):
     __skparam__text = __skadapter__to_sklib_string(text)

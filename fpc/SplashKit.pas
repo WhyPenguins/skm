@@ -539,6 +539,9 @@ function SquareRoot(number: Integer): Double;
 function ToDouble(const text: String): Double;
 function ToInteger(const text: String): Integer;
 function ToLowercase(const text: String): String;
+function ToString(value: Double; precision: Integer): String;
+function ToString(value: Double): String;
+function ToString(value: Integer): String;
 function ToUppercase(const text: String): String;
 function Trim(const text: String): String;
 procedure FreeResourceBundle(name: String);
@@ -3156,6 +3159,9 @@ function __sklib__square_root__int(number: Integer): Double; cdecl; external;
 function __sklib__to_double__string_ref(const text: __sklib_string): Double; cdecl; external;
 function __sklib__to_integer__string_ref(const text: __sklib_string): Integer; cdecl; external;
 function __sklib__to_lowercase__string_ref(const text: __sklib_string): __sklib_string; cdecl; external;
+function __sklib__to_string__double__int(value: Double; precision: Integer): __sklib_string; cdecl; external;
+function __sklib__to_string__double(value: Double): __sklib_string; cdecl; external;
+function __sklib__to_string__int(value: Integer): __sklib_string; cdecl; external;
 function __sklib__to_uppercase__string_ref(const text: __sklib_string): __sklib_string; cdecl; external;
 function __sklib__trim__string_ref(const text: __sklib_string): __sklib_string; cdecl; external;
 procedure __sklib__free_resource_bundle__string(name: __sklib_string); cdecl; external;
@@ -5194,6 +5200,35 @@ var
 begin
   __skparam__text := __skadapter__to_sklib_string(text);
   __skreturn := __sklib__to_lowercase__string_ref(__skparam__text);
+  result := __skadapter__to_string(__skreturn);
+end;
+function ToString(value: Double; precision: Integer): String;
+var
+  __skparam__value: Double;
+  __skparam__precision: Integer;
+  __skreturn: __sklib_string;
+begin
+  __skparam__value := __skadapter__to_sklib_double(value);
+  __skparam__precision := __skadapter__to_sklib_int(precision);
+  __skreturn := __sklib__to_string__double__int(__skparam__value, __skparam__precision);
+  result := __skadapter__to_string(__skreturn);
+end;
+function ToString(value: Double): String;
+var
+  __skparam__value: Double;
+  __skreturn: __sklib_string;
+begin
+  __skparam__value := __skadapter__to_sklib_double(value);
+  __skreturn := __sklib__to_string__double(__skparam__value);
+  result := __skadapter__to_string(__skreturn);
+end;
+function ToString(value: Integer): String;
+var
+  __skparam__value: Integer;
+  __skreturn: __sklib_string;
+begin
+  __skparam__value := __skadapter__to_sklib_int(value);
+  __skreturn := __sklib__to_string__int(__skparam__value);
   result := __skadapter__to_string(__skreturn);
 end;
 function ToUppercase(const text: String): String;

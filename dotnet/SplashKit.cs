@@ -1296,6 +1296,15 @@ namespace SplashKitSDK
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__to_lowercase__string_ref", CharSet=CharSet.Ansi)]
     private static extern __sklib_string __sklib__to_lowercase__string_ref(__sklib_string text);
 
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__to_string__double__int", CharSet=CharSet.Ansi)]
+    private static extern __sklib_string __sklib__to_string__double__int(double value, int precision);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__to_string__double", CharSet=CharSet.Ansi)]
+    private static extern __sklib_string __sklib__to_string__double(double value);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__to_string__int", CharSet=CharSet.Ansi)]
+    private static extern __sklib_string __sklib__to_string__int(int value);
+
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__to_uppercase__string_ref", CharSet=CharSet.Ansi)]
     private static extern __sklib_string __sklib__to_uppercase__string_ref(__sklib_string text);
 
@@ -6399,6 +6408,48 @@ namespace SplashKitSDK
       __skparam__text = __skadapter__to_sklib_string(text);
       __skreturn = __sklib__to_lowercase__string_ref(__skparam__text);
     __skadapter__free__sklib_string(ref __skparam__text);
+      return __skadapter__to_string(__skreturn);
+    }
+    /// <summary>
+    /// Convert the passed in double to a string, restricting the output the a given number of decimal places. For example if value is 3.14159265359 and precision is 2 then the output will be "3.14".
+    /// </summary>
+    /// <param name="value"> the value to convert to a string.</param>
+    /// <param name="precision"> the number of decimal places to output.</param>
+    /// <returns>string containing the double value.</returns>
+    public static string ToString(double value, int precision)
+    {
+      double __skparam__value;
+      int __skparam__precision;
+      __sklib_string __skreturn;
+      __skparam__value = __skadapter__to_sklib_double(value);
+      __skparam__precision = __skadapter__to_sklib_int(precision);
+      __skreturn = __sklib__to_string__double__int(__skparam__value, __skparam__precision);
+      return __skadapter__to_string(__skreturn);
+    }
+    /// <summary>
+    /// Convert the passed in double to a string.
+    /// </summary>
+    /// <param name="value"> the value to convert to a string.</param>
+    /// <returns>string containing the double value.</returns>
+    public static string ToString(double value)
+    {
+      double __skparam__value;
+      __sklib_string __skreturn;
+      __skparam__value = __skadapter__to_sklib_double(value);
+      __skreturn = __sklib__to_string__double(__skparam__value);
+      return __skadapter__to_string(__skreturn);
+    }
+    /// <summary>
+    /// Convert the passed in integer to a string.
+    /// </summary>
+    /// <param name="value"> the value to convert to a string.</param>
+    /// <returns>string containing the integer value.</returns>
+    public static string ToString(int value)
+    {
+      int __skparam__value;
+      __sklib_string __skreturn;
+      __skparam__value = __skadapter__to_sklib_int(value);
+      __skreturn = __sklib__to_string__int(__skparam__value);
       return __skadapter__to_string(__skreturn);
     }
     /// <summary>

@@ -40,7 +40,7 @@ namespace splashkit_lib
      */
     typedef struct sk_conversation *conversation;
 
-        /**
+    /**
      * Language Models:
      * Choose between different language models to trade off speed and intelligence
      * Each model is scaled to fit within 1~2GB and will be automatically downloaded when needed - feel free to try them out!

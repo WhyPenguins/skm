@@ -64,7 +64,6 @@ namespace splashkit_lib
         ADC_PTR=                    0x41444350, //'ADCP';
         MOTOR_DRIVER_PTR =           0x4d444950, //'MDIP';
         SERVO_DRIVER_PTR =           0x53455256, //'SERV'; 
-        LANGUAGE_MODEL_OPTIONS_PTR = 0x4c4d4f50, //'LMOP';
         CONVERSATION_PTR =          0x434f4e56, //'CONV';
         NONE_PTR =                  0x4e4f4e45  //'NONE';
     };
