@@ -33,6 +33,12 @@ typedef enum {
     GEMMA3_4B_INSTRUCT = 25
 } language_model;
 /**
+* Returns a reply from a `conversation`.
+* @param conv The `conversation` to recieve the reply from
+* @return The response from the model
+*/
+string converation_get_reply(conversation conv);
+/**
 * Adds a message to a `conversation`, that the language model will begin replying to.
 * You can receive the reply one piece at a time by calling `conversation_get_reply_piece(conversation c)` in a loop
 * @param c The `conversation` object to check

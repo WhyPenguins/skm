@@ -13,6 +13,7 @@
 #include "core_driver.h"
 
 #include <filesystem>
+#include <sstream>
 
 namespace splashkit_lib
 {
@@ -22,6 +23,7 @@ namespace splashkit_lib
     static vector<conversation> objects;
 
     const language_model DEFAULT_LANGUAGE_MODEL = QWEN3_0_6B_INSTRUCT;
+    const language_model DEFAULT_BASE_LANGUAGE_MODEL = QWEN3_0_6B_BASE;
 
     const int default_max_tokens_base = 256; // base has a higher likelihood of running forever for no reason, better to limit it early
     const int default_max_tokens_instruct = 4096;
@@ -220,7 +222,7 @@ namespace splashkit_lib
 
     string generate_text(string text)
     {
-        return generate_text(DEFAULT_LANGUAGE_MODEL, text);
+        return generate_text(DEFAULT_BASE_LANGUAGE_MODEL, text);
     }    
 
     string generate_text(language_model model, string text)
@@ -368,6 +370,29 @@ namespace splashkit_lib
         c->next_token.type = llamacpp::token_result::token_type::NONE;
 
         return c->next_token.text;
+    }
+
+    string converation_get_reply(conversation conv)
+    {
+        std::stringstream result;
+        string last_piece = "\n";
+
+        while(conversation_is_replying(conv))
+        {
+            string piece = conversation_get_reply_piece(conv);
+
+            // avoid double newlines
+            if (piece == "\n" && last_piece == "\n")
+                continue;
+
+            if (piece == "\n\n")
+                piece = "\n";
+
+            result << piece;
+            last_piece = piece;
+        }
+
+        return result.str();
     }
 
     void __free_conversation_resource(conversation c)

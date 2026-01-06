@@ -45,21 +45,21 @@ namespace splashkit_lib
      * Choose between different language models to trade off speed and intelligence
      * Each model is scaled to fit within 1~2GB and will be automatically downloaded when needed - feel free to try them out!
      *
-     * @constant QWEN3_0_6B_BASE       Qwen3 0.6B Base model - small, extremely fast and good for text commpletion. Very limited world knowledge.
+     * @constant QWEN3_0_6B_BASE       Qwen3 0.6B Base model - small, extremely fast and good for text completion. Very limited world knowledge.
      * @constant QWEN3_0_6B_INSTRUCT   Qwen3 0.6B Instruct model (default) - small, extremely fast and can follow simple instructions. Very limited world knowledge.
      * @constant QWEN3_0_6B_THINKING   Qwen3 0.6B Thinking model - small, extremely fast and can follow more specific instructions, but has a short delay before starting to reply. Very limited world knowledge.
-     * @constant QWEN3_1_7B_BASE       Qwen3 1.7B Base model - decently fast and good for text commpletion. Limited world knowledge.
+     * @constant QWEN3_1_7B_BASE       Qwen3 1.7B Base model - decently fast and good for text completion. Limited world knowledge.
      * @constant QWEN3_1_7B_INSTRUCT   Qwen3 1.7B Instruct model - decently fast and can follow instructions. Limited world knowledge.
      * @constant QWEN3_1_7B_THINKING   Qwen3 1.7B Thinking model - decently fast and can follow more difficult instructions, but has a delay before starting to reply. Limited world knowledge.
-     * @constant QWEN3_4B_BASE         Qwen3 4B Base model - slower but excellent for text commpletion/pattern based completion
+     * @constant QWEN3_4B_BASE         Qwen3 4B Base model - slower but excellent for text completion/pattern based completion
      * @constant QWEN3_4B_INSTRUCT     Qwen3 4B Instruct model - slower but can follow complex instructions
      * @constant QWEN3_4B_THINKING     Qwen3 4B Thinking model - slower but can follow complex and specific instructions, but has a potentially long delay before starting to reply
      * @constant GEMMA3_270M_BASE      Gemma3 270M Base model - tiny, extremely fast, and good for text completion. Very limited world knowledge.
      * @constant GEMMA3_270M_INSTRUCT  Gemma3 270M Instruct model - tiny, extremely fast, and good for very simple instructions. Very limited world knowledge.
-     * @constant GEMMA3_1B_BASE        Gemma3 1B Base model - fast and good for text completion. Has decent world knowledge and multi-lingual abilities.
-     * @constant GEMMA3_1B_INSTRUCT    Gemma3 1B Instruct model - fast and can follow instructions. Has decent world knowledge and multi-lingual abilities.
-     * @constant GEMMA3_4B_BASE        Gemma3 4B Base model - slower but good for text commpletion/pattern based completion. Has decent world knowledge and multi-lingual abilities.
-     * @constant GEMMA3_4B_INSTRUCT    Gemma3 4B Instruct model - slower but can follow complex instructions. Has decent world knowledge and multi-lingual abilities.
+     * @constant GEMMA3_1B_BASE        Gemma3 1B Base model - fast and good for text completion. Has decent world knowledge and multilingual abilities.
+     * @constant GEMMA3_1B_INSTRUCT    Gemma3 1B Instruct model - fast and can follow instructions. Has decent world knowledge and multilingual abilities.
+     * @constant GEMMA3_4B_BASE        Gemma3 4B Base model - slower but good for text completion/pattern based completion. Has decent world knowledge and multilingual abilities.
+     * @constant GEMMA3_4B_INSTRUCT    Gemma3 4B Instruct model - slower but can follow complex instructions. Has decent world knowledge and multilingual abilities.
      */
     enum language_model
     {
@@ -202,6 +202,19 @@ namespace splashkit_lib
      * @attribute self c
      */
     void conversation_add_message(conversation c, const string& message);
+
+    /**
+     * Returns a reply from a `conversation`.
+     *
+     * @param conv The `conversation` to recieve the reply from
+     *
+     * @returns The response from the model
+     *
+     * @attribute class conversation
+     * @attribute method get_reply
+     * @attribute self conv
+     */
+    string converation_get_reply(conversation conv);
 
     /**
      * Returns a single piece of a reply (generally one word at a time) from the `conversation`

@@ -2502,6 +2502,9 @@ namespace SplashKitSDK
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__fill_ellipse_on_window__window__color__double__double__double__double__drawing_options", CharSet=CharSet.Ansi)]
     private static extern void __sklib__fill_ellipse_on_window__window__color__double__double__double__double__drawing_options(__sklib_ptr destination, __sklib_color clr, double x, double y, double width, double height, __sklib_drawing_options opts);
 
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__converation_get_reply__conversation", CharSet=CharSet.Ansi)]
+    private static extern __sklib_string __sklib__converation_get_reply__conversation(__sklib_ptr conv);
+
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__conversation_add_message__conversation__string_ref", CharSet=CharSet.Ansi)]
     private static extern void __sklib__conversation_add_message__conversation__string_ref(__sklib_ptr c, __sklib_string message);
 
@@ -12348,6 +12351,19 @@ namespace SplashKitSDK
       __skparam__height = __skadapter__to_sklib_double(height);
       __skparam__opts = __skadapter__to_sklib_drawing_options(opts);
       __sklib__fill_ellipse_on_window__window__color__double__double__double__double__drawing_options(__skparam__destination, __skparam__clr, __skparam__x, __skparam__y, __skparam__width, __skparam__height, __skparam__opts);
+    }
+    /// <summary>
+    /// Returns a reply from a `conversation`.
+    /// </summary>
+    /// <param name="conv"> The `conversation` to recieve the reply from</param>
+    /// <returns>The response from the model</returns>
+    public static string ConverationGetReply(Conversation conv)
+    {
+      __sklib_ptr __skparam__conv;
+      __sklib_string __skreturn;
+      __skparam__conv = __skadapter__to_sklib_conversation(conv);
+      __skreturn = __sklib__converation_get_reply__conversation(__skparam__conv);
+      return __skadapter__to_string(__skreturn);
     }
     /// <summary>
     /// Adds a message to a `conversation`, that the language model will begin replying to. You can receive the reply one piece at a time by calling `conversation_get_reply_piece(conversation c)` in a loop
@@ -27768,6 +27784,15 @@ public class Conversation : PointerWrapper
     {
         SplashKit.FreeConversation(this);
     }
+    /// <summary>
+    /// Returns a reply from a `conversation`.
+    /// </summary>
+    /// <returns>The response from the model</returns>
+    public string GetReply()
+    {
+        return SplashKit.ConverationGetReply(this);
+    }
+
     /// <summary>
     /// Adds a message to a `conversation`, that the language model will begin replying to. You can receive the reply one piece at a time by calling `conversation_get_reply_piece(conversation c)` in a loop
     /// </summary>
