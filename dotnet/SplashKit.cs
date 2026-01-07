@@ -2502,11 +2502,14 @@ namespace SplashKitSDK
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__fill_ellipse_on_window__window__color__double__double__double__double__drawing_options", CharSet=CharSet.Ansi)]
     private static extern void __sklib__fill_ellipse_on_window__window__color__double__double__double__double__drawing_options(__sklib_ptr destination, __sklib_color clr, double x, double y, double width, double height, __sklib_drawing_options opts);
 
-    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__converation_get_reply__conversation", CharSet=CharSet.Ansi)]
-    private static extern __sklib_string __sklib__converation_get_reply__conversation(__sklib_ptr conv);
-
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__conversation_add_message__conversation__string_ref", CharSet=CharSet.Ansi)]
     private static extern void __sklib__conversation_add_message__conversation__string_ref(__sklib_ptr c, __sklib_string message);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__conversation_get_reply__conversation", CharSet=CharSet.Ansi)]
+    private static extern __sklib_string __sklib__conversation_get_reply__conversation(__sklib_ptr conv);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__conversation_get_reply__conversation__bool", CharSet=CharSet.Ansi)]
+    private static extern __sklib_string __sklib__conversation_get_reply__conversation__bool(__sklib_ptr conv, int withThoughts);
 
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__conversation_get_reply_piece__conversation", CharSet=CharSet.Ansi)]
     private static extern __sklib_string __sklib__conversation_get_reply_piece__conversation(__sklib_ptr c);
@@ -12353,19 +12356,6 @@ namespace SplashKitSDK
       __sklib__fill_ellipse_on_window__window__color__double__double__double__double__drawing_options(__skparam__destination, __skparam__clr, __skparam__x, __skparam__y, __skparam__width, __skparam__height, __skparam__opts);
     }
     /// <summary>
-    /// Returns a reply from a `conversation`.
-    /// </summary>
-    /// <param name="conv"> The `conversation` to recieve the reply from</param>
-    /// <returns>The response from the model</returns>
-    public static string ConverationGetReply(Conversation conv)
-    {
-      __sklib_ptr __skparam__conv;
-      __sklib_string __skreturn;
-      __skparam__conv = __skadapter__to_sklib_conversation(conv);
-      __skreturn = __sklib__converation_get_reply__conversation(__skparam__conv);
-      return __skadapter__to_string(__skreturn);
-    }
-    /// <summary>
     /// Adds a message to a `conversation`, that the language model will begin replying to. You can receive the reply one piece at a time by calling `conversation_get_reply_piece(conversation c)` in a loop
     /// </summary>
     /// <param name="c"> The `conversation` object to check</param>
@@ -12378,6 +12368,35 @@ namespace SplashKitSDK
       __skparam__message = __skadapter__to_sklib_string(message);
       __sklib__conversation_add_message__conversation__string_ref(__skparam__c, __skparam__message);
     __skadapter__free__sklib_string(ref __skparam__message);
+    }
+    /// <summary>
+    /// Returns a reply from a `conversation`, without any related thoughts.
+    /// </summary>
+    /// <param name="conv"> The `conversation` to recieve the reply from</param>
+    /// <returns>The response from the model</returns>
+    public static string ConversationGetReply(Conversation conv)
+    {
+      __sklib_ptr __skparam__conv;
+      __sklib_string __skreturn;
+      __skparam__conv = __skadapter__to_sklib_conversation(conv);
+      __skreturn = __sklib__conversation_get_reply__conversation(__skparam__conv);
+      return __skadapter__to_string(__skreturn);
+    }
+    /// <summary>
+    /// Returns a reply from a `conversation`, with the ability to indicate if thoughts should be included.
+    /// </summary>
+    /// <param name="conv"> The `conversation` to recieve the reply from</param>
+    /// <param name="withThoughts"> A boolean to indicate if thoughts should be included in the reply</param>
+    /// <returns>The response from the model</returns>
+    public static string ConversationGetReply(Conversation conv, bool withThoughts)
+    {
+      __sklib_ptr __skparam__conv;
+      int __skparam__with_thoughts;
+      __sklib_string __skreturn;
+      __skparam__conv = __skadapter__to_sklib_conversation(conv);
+      __skparam__with_thoughts = __skadapter__to_sklib_bool(withThoughts);
+      __skreturn = __sklib__conversation_get_reply__conversation__bool(__skparam__conv, __skparam__with_thoughts);
+      return __skadapter__to_string(__skreturn);
     }
     /// <summary>
     /// Returns a single piece of a reply (generally one word at a time) from the `conversation` You can use a loop while checking `conversation_is_replying` to retrieve the reply as it generates
@@ -27785,21 +27804,31 @@ public class Conversation : PointerWrapper
         SplashKit.FreeConversation(this);
     }
     /// <summary>
-    /// Returns a reply from a `conversation`.
-    /// </summary>
-    /// <returns>The response from the model</returns>
-    public string GetReply()
-    {
-        return SplashKit.ConverationGetReply(this);
-    }
-
-    /// <summary>
     /// Adds a message to a `conversation`, that the language model will begin replying to. You can receive the reply one piece at a time by calling `conversation_get_reply_piece(conversation c)` in a loop
     /// </summary>
     /// <param name="message"> The user message to add to the conversation - the language model will reply to this</param>
     public void AddMessage(string message)
     {
         SplashKit.ConversationAddMessage(this, message);
+    }
+
+    /// <summary>
+    /// Returns a reply from a `conversation`, without any related thoughts.
+    /// </summary>
+    /// <returns>The response from the model</returns>
+    public string GetReply()
+    {
+        return SplashKit.ConversationGetReply(this);
+    }
+
+    /// <summary>
+    /// Returns a reply from a `conversation`, with the ability to indicate if thoughts should be included.
+    /// </summary>
+    /// <param name="withThoughts"> A boolean to indicate if thoughts should be included in the reply</param>
+    /// <returns>The response from the model</returns>
+    public string GetReply(bool withThoughts)
+    {
+        return SplashKit.ConversationGetReply(this, withThoughts);
     }
 
     /// <summary>

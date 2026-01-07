@@ -204,7 +204,7 @@ namespace splashkit_lib
     void conversation_add_message(conversation c, const string& message);
 
     /**
-     * Returns a reply from a `conversation`.
+     * Returns a reply from a `conversation`, without any related thoughts.
      *
      * @param conv The `conversation` to recieve the reply from
      *
@@ -214,7 +214,22 @@ namespace splashkit_lib
      * @attribute method get_reply
      * @attribute self conv
      */
-    string converation_get_reply(conversation conv);
+    string conversation_get_reply(conversation conv);
+
+    /**
+     * Returns a reply from a `conversation`, with the ability to indicate if thoughts should be included.
+     *
+     * @param conv The `conversation` to recieve the reply from
+     * @param with_thoughts A boolean to indicate if thoughts should be included in the reply
+     *
+     * @returns The response from the model
+     *
+     * @attribute class conversation
+     * @attribute method get_reply
+     * @attribute self conv
+     * @attribute suffix with_thoughts
+     */
+    string conversation_get_reply(conversation conv, bool with_thoughts);
 
     /**
      * Returns a single piece of a reply (generally one word at a time) from the `conversation`

@@ -2610,10 +2610,12 @@ sklib.__sklib__fill_ellipse_on_window__window__color__double__double__double__do
 sklib.__sklib__fill_ellipse_on_window__window__color__double__double__double__double.restype = None
 sklib.__sklib__fill_ellipse_on_window__window__color__double__double__double__double__drawing_options.argtypes = [ c_void_p, _sklib_color, c_double, c_double, c_double, c_double, _sklib_drawing_options ]
 sklib.__sklib__fill_ellipse_on_window__window__color__double__double__double__double__drawing_options.restype = None
-sklib.__sklib__converation_get_reply__conversation.argtypes = [ c_void_p ]
-sklib.__sklib__converation_get_reply__conversation.restype = _sklib_string
 sklib.__sklib__conversation_add_message__conversation__string_ref.argtypes = [ c_void_p, _sklib_string ]
 sklib.__sklib__conversation_add_message__conversation__string_ref.restype = None
+sklib.__sklib__conversation_get_reply__conversation.argtypes = [ c_void_p ]
+sklib.__sklib__conversation_get_reply__conversation.restype = _sklib_string
+sklib.__sklib__conversation_get_reply__conversation__bool.argtypes = [ c_void_p, c_int32 ]
+sklib.__sklib__conversation_get_reply__conversation__bool.restype = _sklib_string
 sklib.__sklib__conversation_get_reply_piece__conversation.argtypes = [ c_void_p ]
 sklib.__sklib__conversation_get_reply_piece__conversation.restype = _sklib_string
 sklib.__sklib__conversation_is_replying__conversation.argtypes = [ c_void_p ]
@@ -6687,14 +6689,19 @@ def fill_ellipse_on_window_with_options ( destination, clr, x, y, width, height,
     __skparam__height = __skadapter__to_sklib_double(height)
     __skparam__opts = __skadapter__to_sklib_drawing_options(opts)
     sklib.__sklib__fill_ellipse_on_window__window__color__double__double__double__double__drawing_options(__skparam__destination, __skparam__clr, __skparam__x, __skparam__y, __skparam__width, __skparam__height, __skparam__opts)
-def converation_get_reply ( conv ):
-    __skparam__conv = __skadapter__to_sklib_conversation(conv)
-    __skreturn = sklib.__sklib__converation_get_reply__conversation(__skparam__conv)
-    return __skadapter__to_string(__skreturn)
 def conversation_add_message ( c, message ):
     __skparam__c = __skadapter__to_sklib_conversation(c)
     __skparam__message = __skadapter__to_sklib_string(message)
     sklib.__sklib__conversation_add_message__conversation__string_ref(__skparam__c, __skparam__message)
+def conversation_get_reply ( conv ):
+    __skparam__conv = __skadapter__to_sklib_conversation(conv)
+    __skreturn = sklib.__sklib__conversation_get_reply__conversation(__skparam__conv)
+    return __skadapter__to_string(__skreturn)
+def conversation_get_reply_with_thoughts ( conv, with_thoughts ):
+    __skparam__conv = __skadapter__to_sklib_conversation(conv)
+    __skparam__with_thoughts = __skadapter__to_sklib_bool(with_thoughts)
+    __skreturn = sklib.__sklib__conversation_get_reply__conversation__bool(__skparam__conv, __skparam__with_thoughts)
+    return __skadapter__to_string(__skreturn)
 def conversation_get_reply_piece ( c ):
     __skparam__c = __skadapter__to_sklib_conversation(c)
     __skreturn = sklib.__sklib__conversation_get_reply_piece__conversation(__skparam__c)

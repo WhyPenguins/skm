@@ -33,12 +33,6 @@ typedef enum {
     GEMMA3_4B_INSTRUCT = 25
 } language_model;
 /**
-* Returns a reply from a `conversation`.
-* @param conv The `conversation` to recieve the reply from
-* @return The response from the model
-*/
-string converation_get_reply(conversation conv);
-/**
 * Adds a message to a `conversation`, that the language model will begin replying to.
 * You can receive the reply one piece at a time by calling `conversation_get_reply_piece(conversation c)` in a loop
 * @param c The `conversation` object to check
@@ -46,6 +40,19 @@ string converation_get_reply(conversation conv);
 *
 */
 void conversation_add_message(conversation c, const string &message);
+/**
+* Returns a reply from a `conversation`, without any related thoughts.
+* @param conv The `conversation` to recieve the reply from
+* @return The response from the model
+*/
+string conversation_get_reply(conversation conv);
+/**
+* Returns a reply from a `conversation`, with the ability to indicate if thoughts should be included.
+* @param conv The `conversation` to recieve the reply from
+* @param with_thoughts A boolean to indicate if thoughts should be included in the reply
+* @return The response from the model
+*/
+string conversation_get_reply(conversation conv, bool with_thoughts);
 /**
 * Returns a single piece of a reply (generally one word at a time) from the `conversation`
 * You can use a loop while checking `conversation_is_replying` to retrieve the reply as it generates

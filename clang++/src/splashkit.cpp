@@ -2713,16 +2713,22 @@ void fill_ellipse_on_window(window destination, color clr, double x, double y, d
     __sklib_drawing_options __skparam__opts = __skadapter__to_sklib_drawing_options(opts);
     __sklib__fill_ellipse_on_window__window__color__double__double__double__double__drawing_options(__skparam__destination, __skparam__clr, __skparam__x, __skparam__y, __skparam__width, __skparam__height, __skparam__opts);
 }
-string converation_get_reply(conversation conv) {
-    __sklib_conversation __skparam__conv = __skadapter__to_sklib_conversation(conv);
-    __sklib_string __skreturn = __sklib__converation_get_reply__conversation(__skparam__conv);
-    return __skadapter__to_string(__skreturn);
-}
 void conversation_add_message(conversation c, const string &message) {
     __sklib_conversation __skparam__c = __skadapter__to_sklib_conversation(c);
     const __sklib_string __skparam__message = __skadapter__to_sklib_string(message);
     __sklib__conversation_add_message__conversation__string_ref(__skparam__c, __skparam__message);
     __skadapter__free__sklib_string(__skparam__message);
+}
+string conversation_get_reply(conversation conv) {
+    __sklib_conversation __skparam__conv = __skadapter__to_sklib_conversation(conv);
+    __sklib_string __skreturn = __sklib__conversation_get_reply__conversation(__skparam__conv);
+    return __skadapter__to_string(__skreturn);
+}
+string conversation_get_reply(conversation conv, bool with_thoughts) {
+    __sklib_conversation __skparam__conv = __skadapter__to_sklib_conversation(conv);
+    int __skparam__with_thoughts = __skadapter__to_int(with_thoughts);
+    __sklib_string __skreturn = __sklib__conversation_get_reply__conversation__bool(__skparam__conv, __skparam__with_thoughts);
+    return __skadapter__to_string(__skreturn);
 }
 string conversation_get_reply_piece(conversation c) {
     __sklib_conversation __skparam__c = __skadapter__to_sklib_conversation(c);

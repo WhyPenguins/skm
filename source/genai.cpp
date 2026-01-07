@@ -372,13 +372,21 @@ namespace splashkit_lib
         return c->next_token.text;
     }
 
-    string converation_get_reply(conversation conv)
+    string conversation_get_reply(conversation conv, bool with_thoughts)
     {
         std::stringstream result;
         string last_piece = "\n";
 
         while(conversation_is_replying(conv))
         {
+            
+            // Skip the thinking
+            if (conversation_is_thinking(conv) && !with_thoughts)
+            {
+                conversation_get_reply_piece(conv);
+                continue;
+            }
+            
             string piece = conversation_get_reply_piece(conv);
 
             // avoid double newlines
@@ -392,7 +400,12 @@ namespace splashkit_lib
             last_piece = piece;
         }
 
-        return result.str();
+        return trim(result.str());
+    }
+
+    string conversation_get_reply(conversation conv)
+    {
+        return conversation_get_reply(conv, false);
     }
 
     void __free_conversation_resource(conversation c)

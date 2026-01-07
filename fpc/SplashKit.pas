@@ -941,8 +941,9 @@ procedure FillEllipseOnWindow(destination: Window; clr: Color; rect: Rectangle);
 procedure FillEllipseOnWindow(destination: Window; clr: Color; rect: Rectangle; opts: DrawingOptions);
 procedure FillEllipseOnWindow(destination: Window; clr: Color; x: Double; y: Double; width: Double; height: Double);
 procedure FillEllipseOnWindow(destination: Window; clr: Color; x: Double; y: Double; width: Double; height: Double; opts: DrawingOptions);
-function ConverationGetReply(conv: Conversation): String;
 procedure ConversationAddMessage(c: Conversation; const message: String);
+function ConversationGetReply(conv: Conversation): String;
+function ConversationGetReply(conv: Conversation; withThoughts: Boolean): String;
 function ConversationGetReplyPiece(c: Conversation): String;
 function ConversationIsReplying(c: Conversation): Boolean;
 function ConversationIsThinking(c: Conversation): Boolean;
@@ -3562,8 +3563,9 @@ procedure __sklib__fill_ellipse_on_window__window__color__rectangle(destination:
 procedure __sklib__fill_ellipse_on_window__window__color__rectangle__drawing_options(destination: __sklib_ptr; clr: __sklib_color; rect: __sklib_rectangle; opts: __sklib_drawing_options); cdecl; external;
 procedure __sklib__fill_ellipse_on_window__window__color__double__double__double__double(destination: __sklib_ptr; clr: __sklib_color; x: Double; y: Double; width: Double; height: Double); cdecl; external;
 procedure __sklib__fill_ellipse_on_window__window__color__double__double__double__double__drawing_options(destination: __sklib_ptr; clr: __sklib_color; x: Double; y: Double; width: Double; height: Double; opts: __sklib_drawing_options); cdecl; external;
-function __sklib__converation_get_reply__conversation(conv: __sklib_ptr): __sklib_string; cdecl; external;
 procedure __sklib__conversation_add_message__conversation__string_ref(c: __sklib_ptr; const message: __sklib_string); cdecl; external;
+function __sklib__conversation_get_reply__conversation(conv: __sklib_ptr): __sklib_string; cdecl; external;
+function __sklib__conversation_get_reply__conversation__bool(conv: __sklib_ptr; withThoughts: LongInt): __sklib_string; cdecl; external;
 function __sklib__conversation_get_reply_piece__conversation(c: __sklib_ptr): __sklib_string; cdecl; external;
 function __sklib__conversation_is_replying__conversation(c: __sklib_ptr): LongInt; cdecl; external;
 function __sklib__conversation_is_thinking__conversation(c: __sklib_ptr): LongInt; cdecl; external;
@@ -9300,15 +9302,6 @@ begin
   __skparam__opts := __skadapter__to_sklib_drawing_options(opts);
   __sklib__fill_ellipse_on_window__window__color__double__double__double__double__drawing_options(__skparam__destination, __skparam__clr, __skparam__x, __skparam__y, __skparam__width, __skparam__height, __skparam__opts);
 end;
-function ConverationGetReply(conv: Conversation): String;
-var
-  __skparam__conv: __sklib_ptr;
-  __skreturn: __sklib_string;
-begin
-  __skparam__conv := __skadapter__to_sklib_conversation(conv);
-  __skreturn := __sklib__converation_get_reply__conversation(__skparam__conv);
-  result := __skadapter__to_string(__skreturn);
-end;
 procedure ConversationAddMessage(c: Conversation; const message: String);
 var
   __skparam__c: __sklib_ptr;
@@ -9317,6 +9310,26 @@ begin
   __skparam__c := __skadapter__to_sklib_conversation(c);
   __skparam__message := __skadapter__to_sklib_string(message);
   __sklib__conversation_add_message__conversation__string_ref(__skparam__c, __skparam__message);
+end;
+function ConversationGetReply(conv: Conversation): String;
+var
+  __skparam__conv: __sklib_ptr;
+  __skreturn: __sklib_string;
+begin
+  __skparam__conv := __skadapter__to_sklib_conversation(conv);
+  __skreturn := __sklib__conversation_get_reply__conversation(__skparam__conv);
+  result := __skadapter__to_string(__skreturn);
+end;
+function ConversationGetReply(conv: Conversation; withThoughts: Boolean): String;
+var
+  __skparam__conv: __sklib_ptr;
+  __skparam__with_thoughts: LongInt;
+  __skreturn: __sklib_string;
+begin
+  __skparam__conv := __skadapter__to_sklib_conversation(conv);
+  __skparam__with_thoughts := __skadapter__to_sklib_bool(withThoughts);
+  __skreturn := __sklib__conversation_get_reply__conversation__bool(__skparam__conv, __skparam__with_thoughts);
+  result := __skadapter__to_string(__skreturn);
 end;
 function ConversationGetReplyPiece(c: Conversation): String;
 var

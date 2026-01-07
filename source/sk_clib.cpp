@@ -2653,15 +2653,21 @@ void __sklib__fill_ellipse_on_window__window__color__double__double__double__dou
     drawing_options __skparam__opts = __sklib__to_drawing_options(opts);
     fill_ellipse_on_window(__skparam__destination, __skparam__clr, __skparam__x, __skparam__y, __skparam__width, __skparam__height, __skparam__opts);
 }
-__sklib_string __sklib__converation_get_reply__conversation(__sklib_conversation conv) {
-    conversation __skparam__conv = __sklib__to_conversation(conv);
-    string __skreturn = converation_get_reply(__skparam__conv);
-    return __sklib__to_sklib_string(__skreturn);
-}
 void __sklib__conversation_add_message__conversation__string_ref(__sklib_conversation c, const __sklib_string message) {
     conversation __skparam__c = __sklib__to_conversation(c);
     string __skparam__message = __sklib__to_string(message);
     conversation_add_message(__skparam__c, __skparam__message);
+}
+__sklib_string __sklib__conversation_get_reply__conversation(__sklib_conversation conv) {
+    conversation __skparam__conv = __sklib__to_conversation(conv);
+    string __skreturn = conversation_get_reply(__skparam__conv);
+    return __sklib__to_sklib_string(__skreturn);
+}
+__sklib_string __sklib__conversation_get_reply__conversation__bool(__sklib_conversation conv, int with_thoughts) {
+    conversation __skparam__conv = __sklib__to_conversation(conv);
+    bool __skparam__with_thoughts = __sklib__to_bool(with_thoughts);
+    string __skreturn = conversation_get_reply(__skparam__conv, __skparam__with_thoughts);
+    return __sklib__to_sklib_string(__skreturn);
 }
 __sklib_string __sklib__conversation_get_reply_piece__conversation(__sklib_conversation c) {
     conversation __skparam__c = __sklib__to_conversation(c);
