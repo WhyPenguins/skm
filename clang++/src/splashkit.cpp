@@ -2781,9 +2781,24 @@ string generate_text(language_model model, string text) {
     __skadapter__free__sklib_string(__skparam__text);
     return __skadapter__to_string(__skreturn);
 }
+string generate_text(language_model model, string text, int max_tokens) {
+    int __skparam__model = __skadapter__to_int(model);
+    __sklib_string __skparam__text = __skadapter__to_sklib_string(text);
+    int __skparam__max_tokens = __skadapter__to_int(max_tokens);
+    __sklib_string __skreturn = __sklib__generate_text__language_model__string__int(__skparam__model, __skparam__text, __skparam__max_tokens);
+    __skadapter__free__sklib_string(__skparam__text);
+    return __skadapter__to_string(__skreturn);
+}
 string generate_text(string text) {
     __sklib_string __skparam__text = __skadapter__to_sklib_string(text);
     __sklib_string __skreturn = __sklib__generate_text__string(__skparam__text);
+    __skadapter__free__sklib_string(__skparam__text);
+    return __skadapter__to_string(__skreturn);
+}
+string generate_text(string text, int max_tokens) {
+    __sklib_string __skparam__text = __skadapter__to_sklib_string(text);
+    int __skparam__max_tokens = __skadapter__to_int(max_tokens);
+    __sklib_string __skreturn = __sklib__generate_text__string__int(__skparam__text, __skparam__max_tokens);
     __skadapter__free__sklib_string(__skparam__text);
     return __skadapter__to_string(__skreturn);
 }

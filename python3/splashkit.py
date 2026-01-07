@@ -2636,8 +2636,12 @@ sklib.__sklib__generate_reply__string.argtypes = [ _sklib_string ]
 sklib.__sklib__generate_reply__string.restype = _sklib_string
 sklib.__sklib__generate_text__language_model__string.argtypes = [ c_int, _sklib_string ]
 sklib.__sklib__generate_text__language_model__string.restype = _sklib_string
+sklib.__sklib__generate_text__language_model__string__int.argtypes = [ c_int, _sklib_string, c_int ]
+sklib.__sklib__generate_text__language_model__string__int.restype = _sklib_string
 sklib.__sklib__generate_text__string.argtypes = [ _sklib_string ]
 sklib.__sklib__generate_text__string.restype = _sklib_string
+sklib.__sklib__generate_text__string__int.argtypes = [ _sklib_string, c_int ]
+sklib.__sklib__generate_text__string__int.restype = _sklib_string
 sklib.__sklib__cosine__float.argtypes = [ c_float ]
 sklib.__sklib__cosine__float.restype = c_float
 sklib.__sklib__sine__float.argtypes = [ c_float ]
@@ -6740,9 +6744,20 @@ def generate_text_with_model ( model, text ):
     __skparam__text = __skadapter__to_sklib_string(text)
     __skreturn = sklib.__sklib__generate_text__language_model__string(__skparam__model, __skparam__text)
     return __skadapter__to_string(__skreturn)
+def generate_text_with_model_and_tokens ( model, text, max_tokens ):
+    __skparam__model = __skadapter__to_sklib_language_model(model)
+    __skparam__text = __skadapter__to_sklib_string(text)
+    __skparam__max_tokens = __skadapter__to_sklib_int(max_tokens)
+    __skreturn = sklib.__sklib__generate_text__language_model__string__int(__skparam__model, __skparam__text, __skparam__max_tokens)
+    return __skadapter__to_string(__skreturn)
 def generate_text ( text ):
     __skparam__text = __skadapter__to_sklib_string(text)
     __skreturn = sklib.__sklib__generate_text__string(__skparam__text)
+    return __skadapter__to_string(__skreturn)
+def generate_text_with_tokens ( text, max_tokens ):
+    __skparam__text = __skadapter__to_sklib_string(text)
+    __skparam__max_tokens = __skadapter__to_sklib_int(max_tokens)
+    __skreturn = sklib.__sklib__generate_text__string__int(__skparam__text, __skparam__max_tokens)
     return __skadapter__to_string(__skreturn)
 def cosine ( degrees ):
     __skparam__degrees = __skadapter__to_sklib_float(degrees)

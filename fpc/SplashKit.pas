@@ -954,7 +954,9 @@ procedure FreeConversation(c: Conversation);
 function GenerateReply(model: LanguageModel; prompt: String): String;
 function GenerateReply(prompt: String): String;
 function GenerateText(model: LanguageModel; text: String): String;
+function GenerateText(model: LanguageModel; text: String; maxTokens: Integer): String;
 function GenerateText(text: String): String;
+function GenerateText(text: String; maxTokens: Integer): String;
 function Cosine(degrees: Single): Single;
 function Sine(degrees: Single): Single;
 function Tangent(degrees: Single): Single;
@@ -3576,7 +3578,9 @@ procedure __sklib__free_conversation__conversation(c: __sklib_ptr); cdecl; exter
 function __sklib__generate_reply__language_model__string(model: LongInt; prompt: __sklib_string): __sklib_string; cdecl; external;
 function __sklib__generate_reply__string(prompt: __sklib_string): __sklib_string; cdecl; external;
 function __sklib__generate_text__language_model__string(model: LongInt; text: __sklib_string): __sklib_string; cdecl; external;
+function __sklib__generate_text__language_model__string__int(model: LongInt; text: __sklib_string; maxTokens: Integer): __sklib_string; cdecl; external;
 function __sklib__generate_text__string(text: __sklib_string): __sklib_string; cdecl; external;
+function __sklib__generate_text__string__int(text: __sklib_string; maxTokens: Integer): __sklib_string; cdecl; external;
 function __sklib__cosine__float(degrees: Single): Single; cdecl; external;
 function __sklib__sine__float(degrees: Single): Single; cdecl; external;
 function __sklib__tangent__float(degrees: Single): Single; cdecl; external;
@@ -9416,6 +9420,19 @@ begin
   __skreturn := __sklib__generate_text__language_model__string(__skparam__model, __skparam__text);
   result := __skadapter__to_string(__skreturn);
 end;
+function GenerateText(model: LanguageModel; text: String; maxTokens: Integer): String;
+var
+  __skparam__model: LongInt;
+  __skparam__text: __sklib_string;
+  __skparam__max_tokens: Integer;
+  __skreturn: __sklib_string;
+begin
+  __skparam__model := __skadapter__to_sklib_language_model(model);
+  __skparam__text := __skadapter__to_sklib_string(text);
+  __skparam__max_tokens := __skadapter__to_sklib_int(maxTokens);
+  __skreturn := __sklib__generate_text__language_model__string__int(__skparam__model, __skparam__text, __skparam__max_tokens);
+  result := __skadapter__to_string(__skreturn);
+end;
 function GenerateText(text: String): String;
 var
   __skparam__text: __sklib_string;
@@ -9423,6 +9440,17 @@ var
 begin
   __skparam__text := __skadapter__to_sklib_string(text);
   __skreturn := __sklib__generate_text__string(__skparam__text);
+  result := __skadapter__to_string(__skreturn);
+end;
+function GenerateText(text: String; maxTokens: Integer): String;
+var
+  __skparam__text: __sklib_string;
+  __skparam__max_tokens: Integer;
+  __skreturn: __sklib_string;
+begin
+  __skparam__text := __skadapter__to_sklib_string(text);
+  __skparam__max_tokens := __skadapter__to_sklib_int(maxTokens);
+  __skreturn := __sklib__generate_text__string__int(__skparam__text, __skparam__max_tokens);
   result := __skadapter__to_string(__skreturn);
 end;
 function Cosine(degrees: Single): Single;

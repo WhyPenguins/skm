@@ -1,7 +1,7 @@
 /**
  * @header  genai
  * @author  Sean Boettger
- * @brief   SplashKit gives you a simple way to use and embed local AIs in your projects,
+ *   SplashKit gives you a simple way to use and embed local AIs in your projects,
  * that run on your own computer.
  *
  * @attribute group  generative_ai
@@ -81,7 +81,7 @@ namespace splashkit_lib
     };
 
     /**
-     * @brief Generates a reply to a textual prompt by a language model
+     * Generates a reply to a textual prompt by a language model
      *
      * The language model will respond to the textual prompt in a chat style format. It will follow instructions and answer questions.
      * Instruct or Thinking models are recommended. Base models likely won't output sensible results.
@@ -93,7 +93,7 @@ namespace splashkit_lib
     string generate_reply(string prompt);
 
     /**
-     * @brief Generates a reply to a textual prompt by a language model
+     * Generates a reply to a textual prompt by a language model
      *
      * The language model will respond to the textual prompt in a chat style format. It will follow instructions and answer questions.
      * Instruct or Thinking models are recommended. Base models likely won't output sensible results.
@@ -108,7 +108,7 @@ namespace splashkit_lib
     string generate_reply(language_model model, string prompt);
 
     /**
-     * @brief Generates text that continues from a prompt
+     * Generates text that continues from a prompt - with default of 125 tokens.
      *
      * The language model will continue predicting text based on patterns in the prompt - it will not directly follow instructions or answer questions.
      * Base models are recommended; Instruct and Thinking models may work.
@@ -120,7 +120,21 @@ namespace splashkit_lib
     string generate_text(string text);
 
     /**
-     * @brief Generates text that continues from a prompt
+     * Generates text that continues from a prompt.
+     *
+     * The language model will continue predicting text based on patterns in the prompt - it will not directly follow instructions or answer questions.
+     * Base models are recommended; Instruct and Thinking models may work.
+     *
+     * @param text The input text for the language model to continue.
+     * @param max_tokens The maximum tokens used in response - determining the length of the output and the time taken. Keep this small for reasonable execution times.
+     *
+     * @returns The generated reply.
+     * @attribute suffix with_tokens
+     */
+    string generate_text(string text, int max_tokens);
+
+    /**
+     * Generates text that continues from a prompt, with a maximum of 125 tokens.
      *
      * The language model will continue predicting text based on patterns in the prompt - it will not directly follow instructions or answer questions.
      * Base models are recommended; Instruct and Thinking models may work.
@@ -135,7 +149,23 @@ namespace splashkit_lib
     string generate_text(language_model model, string text);
 
     /**
-     * @brief Creates a new `conversation` object, that uses the default language model.
+     * Generates text that continues from a prompt, with a maximum of 125 tokens.
+     *
+     * The language model will continue predicting text based on patterns in the prompt - it will not directly follow instructions or answer questions.
+     * Base models are recommended; Instruct and Thinking models may work.
+     *
+     * @param model  The language model to use
+     * @param text The input text for the language model to continue.
+     * @param max_tokens The maximum tokens used in response - determining the length of the output and the time taken. Keep this small for reasonable execution times.
+     *
+     * @returns The generated reply.
+     *
+     * @attribute suffix with_model_and_tokens
+     */
+    string generate_text(language_model model, string text, int max_tokens);
+
+    /**
+     * Creates a new `conversation` object, that uses the default language model.
      *
      * The `conversation` object can have messages added to it, and responses streamed back from it via the other Conversation functions and procedures
      *
@@ -147,7 +177,7 @@ namespace splashkit_lib
     conversation create_conversation();
 
     /**
-     * @brief Creates a new `conversation` object, that uses a chosen language model.
+     * Creates a new `conversation` object, that uses a chosen language model.
      *
      * The `conversation` object can have messages added to it, and responses streamed back from it via the other Conversation functions and procedures
      *

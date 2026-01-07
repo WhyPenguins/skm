@@ -2717,9 +2717,22 @@ __sklib_string __sklib__generate_text__language_model__string(int model, __sklib
     string __skreturn = generate_text(__skparam__model, __skparam__text);
     return __sklib__to_sklib_string(__skreturn);
 }
+__sklib_string __sklib__generate_text__language_model__string__int(int model, __sklib_string text, int max_tokens) {
+    language_model __skparam__model = __sklib__to_language_model(model);
+    string __skparam__text = __sklib__to_string(text);
+    int __skparam__max_tokens = __sklib__to_int(max_tokens);
+    string __skreturn = generate_text(__skparam__model, __skparam__text, __skparam__max_tokens);
+    return __sklib__to_sklib_string(__skreturn);
+}
 __sklib_string __sklib__generate_text__string(__sklib_string text) {
     string __skparam__text = __sklib__to_string(text);
     string __skreturn = generate_text(__skparam__text);
+    return __sklib__to_sklib_string(__skreturn);
+}
+__sklib_string __sklib__generate_text__string__int(__sklib_string text, int max_tokens) {
+    string __skparam__text = __sklib__to_string(text);
+    int __skparam__max_tokens = __sklib__to_int(max_tokens);
+    string __skreturn = generate_text(__skparam__text, __skparam__max_tokens);
     return __sklib__to_sklib_string(__skreturn);
 }
 float __sklib__cosine__float(float degrees) {
