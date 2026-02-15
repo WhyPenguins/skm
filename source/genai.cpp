@@ -14,6 +14,7 @@
 #include "random.h"
 
 #include <filesystem>
+#include <sstream>
 
 namespace splashkit_lib
 {
