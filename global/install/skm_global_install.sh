@@ -91,7 +91,7 @@ if [ ! $? -eq 0 ]; then
     exit 1
 fi
 
-$PRIVILEGED cp "${APP_PATH}/splash*.h" ${INC_DEST}
+$PRIVILEGED cp "${APP_PATH}"/splash*.h ${INC_DEST}
 if [ ! $? -eq 0 ]; then
     echo "Failed to copy SplashKit header to ${INC_DEST}"
     exit 1
