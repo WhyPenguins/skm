@@ -158,16 +158,59 @@ file(GLOB SPLASHKITCPP_SOURCE_FILES
   "${SK_GPP}/src/*.cpp"
 )
 
+#### llama sub project ####
+
+ExternalProject_Add(
+        llama_ext
+        SOURCE_DIR "${SK_SRC}/llama.cpp"
+        CMAKE_ARGS
+            -DLLAMA_BUILD_TESTS=OFF
+            -DLLAMA_BUILD_TOOLS=OFF
+            -DLLAMA_BUILD_EXAMPLES=OFF
+            -DLLAMA_BUILD_SERVER=OFF
+            -DGGML_BLAS=OFF
+            -DGGML_METAL=OFF
+            -DGGML_VULKAN=OFF
+            -DBUILD_SHARED_LIBS=OFF
+            -DLLAMA_BUILD_COMMON=OFF
+            -DLLAMA_TOOLS_INSTALL=OFF
+            -DCMAKE_BUILD_TYPE=Release
+            -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+            -DGGML_STATIC=ON
+            -DGGML_OPENMP=OFF
+            -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+    )
+
+    ExternalProject_Get_Property(llama_ext INSTALL_DIR)
+
+    foreach(lib llama ggml ggml-cpu ggml-base)
+        add_library(${lib} STATIC IMPORTED GLOBAL)
+        if (MSYS AND NOT "${lib}" STREQUAL "llama") # llama still ends up as libllama.a on Windows, unsure why
+            set_target_properties(${lib} PROPERTIES
+                IMPORTED_LOCATION
+                    ${INSTALL_DIR}/lib/${lib}.a # no lib prefix
+            )
+        else()
+            set_target_properties(${lib} PROPERTIES
+                IMPORTED_LOCATION
+                    ${INSTALL_DIR}/lib/lib${lib}.a # lib prefix
+            )
+        endif()
+        add_dependencies(${lib} llama_ext)
+    endforeach()
+
+    set(LLAMA_LIB_FLAGS llama ggml ggml-cpu ggml-base)
+
 #### SplashKit SHARED LIBRARY ####
 add_library(SplashKit SHARED ${SOURCE_FILES} ${C_SOURCE_FILES} ${SPLASHKITCPP_SOURCE_FILES})
 
 # Link libraries based on platform
 if(RASPBERRY_PI_5 AND WIRINGPI_LIBRARY AND WIRINGPI_INCLUDE_DIR)
-    target_link_libraries(SplashKit ${SPLASHKIT_REQUIRED_LIBS_LDFLAGS} ${WIRINGPI_LIBS})
+    target_link_libraries(SplashKit ${SPLASHKIT_REQUIRED_LIBS_LDFLAGS} ${WIRINGPI_LIBS} ${LLAMA_LIB_FLAGS})
 elseif (RASPBERRY_PI AND PIGPIO_FOUND)
-    target_link_libraries(SplashKit ${SPLASHKIT_REQUIRED_LIBS_LDFLAGS} ${PIGPIOD_IF2_LIB})
+    target_link_libraries(SplashKit ${SPLASHKIT_REQUIRED_LIBS_LDFLAGS} ${PIGPIOD_IF2_LIB} ${LLAMA_LIB_FLAGS})
 else()
-    target_link_libraries(SplashKit ${SPLASHKIT_REQUIRED_LIBS_LDFLAGS})
+    target_link_libraries(SplashKit ${SPLASHKIT_REQUIRED_LIBS_LDFLAGS} ${LLAMA_LIB_FLAGS})
 endif()
 
 if (APPLE)
