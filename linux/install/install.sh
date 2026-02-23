@@ -63,4 +63,4 @@ fi
 
 echo "SplashKit Installed"
 
-# "${SKM_PATH}/global/install/skm_global_install.sh"
+"${SKM_PATH}/global/install/skm_global_install.sh"
