@@ -24,8 +24,8 @@ fi
 
 echo "Adding llama.cpp"
 cd "${SKM_PATH}/source"
-mdkir -p ./llama.cpp
-cd ./llama.cpp
+mkdir -p "${SKM_PATH}/source/llama.cpp"
+cd "${SKM_PATH}/source/llama.cpp"
 if [ ! -d ".git" ]; then
   git init
   git remote add origin https://github.com/ggml-org/llama.cpp
